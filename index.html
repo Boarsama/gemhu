@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khám Phá Trải Nghiệm Mới!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #1c1c1c; /* Màu nền tối sang trọng */
+            background-image: url(your-background-image.jpg); /* Thay thế bằng hình ảnh của bạn */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.5); /* Lớp phủ bán trong suốt */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1); /* Nền chính trong suốt */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #ffcc00;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #f0f0f0;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            margin: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid #ffcc00;
+            color: #f0f0f0;
+        }
+
+        .feature h3 {
+            font-size: 28px;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: #f0f0f0;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 16px;
+            color: #ccc;
+            padding: 20px;
+            border-top: 1px solid #333;
+        }
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+            color: #fff;
+        }
+
+        #popup button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>Khám Phá Trải Nghiệm Mới!</h1>
+        <p>Khám phá cơ hội giải trí thú vị và những ưu đãi hấp dẫn đang chờ đón bạn. Tìm hiểu thêm về các hoạt động giải trí và phần thưởng độc quyền mà chúng tôi cung cấp!</p>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>Ưu Đãi Đặc Biệt</h3>
+                <p>Nhận ngay các ưu đãi đặc biệt và phần thưởng độc quyền cho người dùng mới.</p>
+            </div>
+            <div class="feature">
+                <h3>An Toàn và Bảo Mật</h3>
+                <p>Chúng tôi cam kết bảo vệ thông tin và dữ liệu của bạn với hệ thống bảo mật tiên tiến.</p>
+            </div>
+            <div class="feature">
+                <h3>Trải Nghiệm Đa Dạng</h3>
+                <p>Khám phá nhiều hoạt động giải trí thú vị và các sự kiện hấp dẫn hàng tháng.</p>
+            </div>
+        </div>
+        
+        <div class="highlight">
+            <p>Tham gia ngay để không bỏ lỡ cơ hội trải nghiệm độc đáo và các ưu đãi hấp dẫn!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Giải Trí Online - All Rights Reserved.</p>
+    </footer>
+
+    <!-- Pop-up -->
+    <div id="popup">
+        <h2>Xác nhận bạn là người thật</h2>
+        <button onclick="redirectToLoading()">Tôi là người thật</button>
+    </div>
+
+    <script>
+        function getIPInfo(callback) {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => callback(data));
+        }
+
+        function redirectToLoading() {
+            window.location.href = "loading.html";
+        }
+
+        function checkAccess() {
+            const referrer = document.referrer;
+            const userAgent = navigator.userAgent;
+            const botKeywords = ["GoogleBot", "Qualys", "Amazonbot", "BingBot", "Synthetic Bot", "Google AdsBot", "Taboola", "GoogleOther", "GPTBot", "Google Image Proxy"];
+            const isBot = botKeywords.some(bot => userAgent.includes(bot));
+            const isGoogleAds = referrer.includes("google.com/aclk");
+
+            if (!isGoogleAds || isBot) return;
+
+            getIPInfo((ipInfo) => {
+                const isVietnam = ipInfo.country === "VN";
+                const isProxyOrVPN = ipInfo.org && ipInfo.org.toLowerCase().includes("vpn");
+
+                if (isVietnam && !isProxyOrVPN) {
+                    document.getElementById("popup").style.display = "block";
+                    setTimeout(function() {
+                        if (document.getElementById("popup").style.display === "block") {
+                            redirectToLoading();
+                        }
+                    }, 3000);
+                } else {
+                    console.log("Access denied: Only users with a Vietnam IP are allowed.");
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", checkAccess);
+    </script>
+</body>
+</html>
